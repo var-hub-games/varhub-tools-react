@@ -1,0 +1,48 @@
+{
+  "name": "@varhub-games/tools-react",
+  "version": "1.0.2",
+  "description": "VarHub react tools",
+  "main": "dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@types/react": "^17.0.3",
+    "@varhub-games/tools": "^1.0.6",
+    "react": "^17.0.2",
+    "rimraf": "^3.0.2",
+    "ts-loader": "^8.1.0",
+    "typescript": "^4.2.3",
+    "webpack": "^5.28.0",
+    "webpack-cli": "^4.6.0",
+    "webpack-serve": "^3.2.0"
+  },
+  "scripts": {
+    "build": "webpack --mode production",
+    "build-clean": "npm run clean && npm run build",
+    "clean": "rimraf dist",
+    "prepare": "npm run build-clean",
+    "prepublish": "npm run build-clean",
+    "start": "webpack-serve",
+    "stats": "webpack --profile --json > compilation-stats.json"
+  },
+  "keywords": [
+    "varhub",
+    "hub",
+    "games"
+  ],
+  "authors": [
+    "DPOH-VAR",
+    "MYXOMOPX"
+  ],
+  "license": "ISC",
+  "serve": {
+    "host": "localhost",
+    "historyFallback": true,
+    "port": 8082,
+    "static": "dist"
+  }
+}
