@@ -1,6 +1,6 @@
 {
   "name": "@varhub-games/tools-react",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "VarHub react tools",
   "main": "dist/index.js",
   "publishConfig": {
