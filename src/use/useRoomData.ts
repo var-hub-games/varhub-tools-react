@@ -13,11 +13,13 @@ export default function useRoomData(room?: Room): RoomData {
     useEffect(() => {
         const updateData = () => setData(buildRoomData(usedRoom));
         usedRoom.addEventListener("connect", updateData);
+        usedRoom.addEventListener("connectionInfo", updateData);
         usedRoom.addEventListener("disconnect", updateData);
         usedRoom.addEventListener("enter", updateData);
         usedRoom.addEventListener("destroy", updateData);
         return () => {
             usedRoom.removeEventListener("connect", updateData);
+            usedRoom.removeEventListener("connectionInfo", updateData);
             usedRoom.removeEventListener("disconnect", updateData);
             usedRoom.removeEventListener("enter", updateData);
             usedRoom.removeEventListener("destroy", updateData);

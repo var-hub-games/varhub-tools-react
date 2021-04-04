@@ -1,3 +1,4 @@
+export { default as React } from "react"
 export { RoomProvider } from "./provider/RoomProvider"
 export { default as useDoor } from "./use/useDoor"
 export { default as useDoorAllowlist } from "./use/useDoorAllowlist"
