@@ -1,8 +1,7 @@
 import {useContext, useEffect, useState} from "react"
 import RoomContext from "../context/RoomContext"
 import {Room} from "@varhub-games/tools/dist/Room";
-import {Door} from "@varhub-games/tools/dist/Door";
-import {HubAccount} from "../../../varhub-tools/dist/types";
+import {HubAccount} from "@varhub-games/tools/dist/types";
 
 
 export default function useDoorKnock(room?: Room): Map<string, HubAccount> {
