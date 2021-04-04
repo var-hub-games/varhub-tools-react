@@ -24,7 +24,6 @@ module.exports = (env) => {
             library: {
                 name: 'VarHubTools',
                 type: 'umd2',
-                export: 'default',
             },
         },
         resolve: {
