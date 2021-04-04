@@ -15,16 +15,15 @@ module.exports = (env) => {
                 commonjs: 'react',
                 commonjs2: 'react',
                 amd: 'react',
-                root: 'React',
+                root: 'react'
             },
         },
         output: {
             path: path.join(__dirname, 'dist'),
             filename: 'index.js',
-            library: {
-                name: 'VarHubTools',
-                type: 'umd2',
-            },
+            library: 'VarHubTools',
+            libraryTarget: 'umd2',
+            globalObject: 'this'
         },
         resolve: {
             extensions: ['.ts','.tsx', '.js']

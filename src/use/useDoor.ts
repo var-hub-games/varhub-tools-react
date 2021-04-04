@@ -1,7 +1,7 @@
 import {useContext, useEffect, useState} from "react"
-import RoomContext from "../context/RoomContext"
 import {Room} from "@varhub-games/tools/dist/Room";
 import {Door} from "@varhub-games/tools/dist/Door";
+import RoomContext from "../context/RoomContext"
 
 
 export default function useDoor(room?: Room): Door {
