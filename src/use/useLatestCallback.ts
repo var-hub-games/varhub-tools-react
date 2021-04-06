@@ -1,5 +1,6 @@
 import { useRef, useCallback } from "react";
 
+
 export default function useLatestCallback<T extends (...args: any[]) => any>(handler: T): T {
 	const handlerRef = useRef(handler);
 	handlerRef.current = handler;

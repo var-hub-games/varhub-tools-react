@@ -1,7 +1,8 @@
 import {useState, useEffect, useContext} from "react"
 import {Room} from "@varhub-games/tools/dist/Room";
-import {RoomData} from "../context/RoomDataContext";
+import {RoomData} from "../types";
 import RoomContext from "../context/RoomContext";
+
 
 export default function useRoomData(room?: Room): RoomData {
     const ctxRoom = useContext(RoomContext);
@@ -37,6 +38,7 @@ function buildRoomData(room: Room): RoomData{
         destroyed: room.destroyed,
         name: room.name,
         owned: room.owned,
-        resource: room.resource
+        resource: room.resource,
+        roomStartDiffMs: room.roomStartDiffMs
     }
 }

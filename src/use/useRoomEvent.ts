@@ -3,6 +3,7 @@ import {Room, RoomEvents} from "@varhub-games/tools/dist/Room";
 import RoomContext from "../context/RoomContext";
 import useLatestCallback from "./useLatestCallback";
 
+
 export default function useRoomEvent<E extends keyof RoomEvents>(
     eventName: E,
     eventHandler: (event: RoomEvents[E]) => void,

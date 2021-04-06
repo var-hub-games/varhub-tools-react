@@ -3,6 +3,7 @@ import {Room} from "@varhub-games/tools/dist/Room";
 import {Connection} from "@varhub-games/tools/dist/Connection";
 import RoomContext from "../context/RoomContext";
 
+
 export default function useRoomConnections(room?: Room): Map<string, Connection> {
     const ctxRoom = useContext(RoomContext);
     const usedRoom = room ?? ctxRoom;

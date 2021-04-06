@@ -1,7 +1,6 @@
 import {useCallback, useContext, useEffect, useMemo, useState} from "react"
 import RoomContext from "../context/RoomContext"
 import {Room} from "@varhub-games/tools/dist/Room";
-import {Door} from "@varhub-games/tools/dist/Door";
 
 
 export default function useDoorBlocklist(room?: Room): [Set<string>, (string) => Promise<void>] {

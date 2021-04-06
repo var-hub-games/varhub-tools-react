@@ -1,6 +1,5 @@
 import {useState, useEffect, useContext} from "react"
 import {Room} from "@varhub-games/tools/dist/Room";
-import {RoomData} from "../context/RoomDataContext";
 import RoomContext from "../context/RoomContext";
 import useLatestCallback from "./useLatestCallback";
 
@@ -32,17 +31,4 @@ export default function useRoomStateSelector<S, T>(
         };
     }, [usedRoom, ...deps]);
     return state;
-}
-
-function buildRoomData(room: Room): RoomData{
-    return {
-        entered: room.entered,
-        connected: room.connected,
-        id: room.id,
-        connectionId: room.connectionId,
-        destroyed: room.destroyed,
-        name: room.name,
-        owned: room.owned,
-        resource: room.resource
-    }
 }

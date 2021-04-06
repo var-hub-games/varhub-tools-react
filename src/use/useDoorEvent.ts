@@ -4,6 +4,7 @@ import {DoorEvents} from "@varhub-games/tools/dist/Door";
 import RoomContext from "../context/RoomContext";
 import useLatestCallback from "./useLatestCallback";
 
+
 export default function useDoorEvent<E extends keyof DoorEvents>(
     eventName: E,
     eventHandler: (event: DoorEvents[E]) => void,
