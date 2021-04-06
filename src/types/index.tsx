@@ -8,6 +8,7 @@ export interface RoomData {
     name: string|null
     resource: string|null
     roomStartDiffMs: number|null
+    roomStartDiffAccuracyMs: number
 }
 
 export interface RoomTimeoutCallback {

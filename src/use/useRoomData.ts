@@ -41,6 +41,7 @@ function buildRoomData(room: Room): RoomData{
         name: room.name,
         owned: room.owned,
         resource: room.resource,
-        roomStartDiffMs: room.roomStartDiffMs
+        roomStartDiffMs: room.roomStartDiffMs,
+        roomStartDiffAccuracyMs: room.roomStartDiffAccuracyMs
     }
 }
