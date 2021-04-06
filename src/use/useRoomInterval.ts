@@ -27,31 +27,40 @@ export default function useRoomInterval(
     const { callOnExpired } = options;
 
     useEffect(() => {
+        if (stepMs == null) return;
+        if (timeValue == null) return;
         if (roomStartDiffMs == null) return;
-        const fullTimeout = timeValue - performance.now() + roomStartDiffMs;
+        if (!usedRoom) return;
+        const stableRoom = usedRoom;
+
+        const fullTimeout = stableRoom.getTimeLeft(timeValue);
         if (fullTimeout < 0) {
             staticCallback(0, fullTimeout, true);
             return;
         }
         const timeout = fullTimeout % stepMs;
         let counter = Math.floor(fullTimeout / stepMs);
-        let i: number|null = null;
-        const t = setTimeout(() => {
-            const diff = timeValue - performance.now() + roomStartDiffMs;
+
+        // fixing time diff, do not use setInterval here
+        let t = setTimeout(handleTime, timeout);
+        function handleTime(){
+            let diff = stableRoom.getTimeLeft(timeValue);
             staticCallback(counter--, diff, false);
-            if (counter > 0) {
-                i = setInterval(() => {
-                    const diff = timeValue - performance.now() + roomStartDiffMs;
-                    staticCallback(counter--, diff, false);
-                    if (counter < 0 && i != null) clearInterval(i);
-                }, stepMs);
+            if (counter < 0) return;
+            let timeout = diff - (stepMs * counter);
+            while (timeout <= 0) {
+                staticCallback(counter--, diff, false);
+                diff = stableRoom.getTimeLeft(timeValue);
+                timeout = diff - (stepMs * counter);
             }
-        }, timeout);
+            if (counter < 0) return;
+            t = setTimeout(handleTime, timeout);
+        }
+
         return () => {
             clearTimeout(t);
-            if (i != null) clearInterval(i);
         }
-    }, [timeValue, stepMs, roomStartDiffMs, callOnExpired, stepMs]);
+    }, [timeValue, stepMs, roomStartDiffMs, callOnExpired, stepMs, usedRoom]);
 }
 
 

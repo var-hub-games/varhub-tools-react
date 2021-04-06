@@ -25,19 +25,23 @@ export default function useRoomTimeout(
     const staticCallback = useLatestCallback(callback);
     const { callOnExpired } = options;
 
+
     useEffect(() => {
         if (roomStartDiffMs == null) return;
-        const timeout = timeValue - performance.now() + roomStartDiffMs;
+        if (!usedRoom) return;
+        const stableRoom = usedRoom;
+
+        const timeout = stableRoom.getTimeLeft(timeValue);
         if (timeout < 0) {
             if (callOnExpired) staticCallback(0, timeout, true);
             return;
         }
         const t = setTimeout(() => {
-            const diff = timeValue - performance.now() + roomStartDiffMs;
+            const diff = stableRoom.getTimeLeft(timeValue);
             staticCallback(0, diff, false);
         }, timeout);
         return () => clearTimeout(t);
-    }, [timeValue, roomStartDiffMs, callOnExpired]);
+    }, [timeValue, roomStartDiffMs, callOnExpired, usedRoom]);
 }
 
 
