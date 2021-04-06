@@ -1,6 +1,6 @@
 {
   "name": "@varhub-games/tools-react",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "VarHub react tools",
   "main": "dist/index.js",
   "publishConfig": {
@@ -11,7 +11,7 @@
   ],
   "devDependencies": {
     "@types/react": "^17.0.3",
-    "@varhub-games/tools": "^1.1.11",
+    "@varhub-games/tools": "^1.1.13",
     "react": "^17.0.2",
     "rimraf": "^3.0.2",
     "ts-loader": "^8.1.0",

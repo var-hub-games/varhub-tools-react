@@ -18,12 +18,14 @@ export default function useRoomData(room?: Room): RoomData {
         usedRoom.addEventListener("disconnect", updateData);
         usedRoom.addEventListener("enter", updateData);
         usedRoom.addEventListener("destroy", updateData);
+        usedRoom.addEventListener("syncTime", updateData);
         return () => {
             usedRoom.removeEventListener("connect", updateData);
             usedRoom.removeEventListener("connectionInfo", updateData);
             usedRoom.removeEventListener("disconnect", updateData);
             usedRoom.removeEventListener("enter", updateData);
             usedRoom.removeEventListener("destroy", updateData);
+            usedRoom.removeEventListener("syncTime", updateData);
         };
     }, [usedRoom]);
     return data;
