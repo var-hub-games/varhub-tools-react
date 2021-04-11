@@ -15,6 +15,7 @@ export default function useRoomTimeCounter(
     {min, max}: RoomTimeCounterOptions = {},
     room?: Room
 ): number|null {
+
     const ctxRoom = useContext(RoomContext);
     const usedRoom = room ?? ctxRoom;
     if (!usedRoom) throw new Error("useRoomTimeCounter with no <RoomProvider/>");
@@ -26,9 +27,10 @@ export default function useRoomTimeCounter(
         if (timerStartValue == null) return null;
         if (roomStartDiffMs == null) return null;
         if (stepMs == null || stepMs <= 0) return null;
-        const timePassed = -usedRoom.getTimeLeft(timerStartValue);
+        const timePassed = usedRoom.getTimePassed(timerStartValue);
         let value = Math.floor(timePassed / stepMs);
         if (floorMin != null && floorMin > value) return floorMin;
+        if (floorMax != null && value >= floorMax) return floorMax;
         return value;
     });
 
@@ -41,21 +43,30 @@ export default function useRoomTimeCounter(
         const stableRoom = usedRoom;
         const stableStepMs = stepMs;
 
-        const timePassed = -stableRoom.getTimeLeft(stableTimeValue); // 5200
+        const timePassed = stableRoom.getTimePassed(stableTimeValue); // 5200
         let calculatedValue: number;
         calculatedValue = Math.floor(timePassed / stableStepMs);
         if (floorMin != null && floorMin > calculatedValue) calculatedValue = floorMin;
-        const timeout = timePassed - (calculatedValue * stableStepMs);
-        setValue(calculatedValue++);
+        let timeout = stableStepMs - timePassed + (calculatedValue * stableStepMs);
+        while (timeout < 0) {
+            calculatedValue++
+            timeout = stableStepMs - timePassed + (calculatedValue * stableStepMs);
+        }
 
-        // fixing time diff, do not use setInterval here
+        if (floorMax != null && calculatedValue >= floorMax) {
+            setValue(floorMax);
+            return;
+        } else {
+            setValue(calculatedValue);
+        }
+
         let t = setTimeout(handleTime, timeout);
         function handleTime(){
-            const timePassed = -stableRoom.getTimeLeft(stableTimeValue);
-            let timeout = timePassed - (calculatedValue * stableStepMs);
-            while (timeout <= 0) {
+            const timePassed = stableRoom.getTimePassed(stableTimeValue);
+            let timeout = stableStepMs - timePassed + (calculatedValue * stableStepMs);
+            while (timeout < 0) {
                 calculatedValue++
-                timeout = timePassed - (calculatedValue * stableStepMs);
+                timeout = stableStepMs - timePassed + (calculatedValue * stableStepMs);
             }
             if (floorMax != null && calculatedValue >= floorMax) {
                 setValue(floorMax)
