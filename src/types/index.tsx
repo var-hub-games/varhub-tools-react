@@ -12,5 +12,5 @@ export interface RoomData {
 }
 
 export interface RoomTimeoutCallback {
-    (callbackLeft: number, diffTimeMs: number, expired: boolean): void
+    (stepsLeft: number, timeLeftMs: number, expired: boolean): void
 }

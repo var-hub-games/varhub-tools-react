@@ -13,8 +13,8 @@ export { default as useRoomData } from "./use/useRoomData"
 export { default as useRoomEvent } from "./use/useRoomEvent"
 export { default as useRoomState } from "./use/useRoomState"
 export { default as useRoomStateSelector } from "./use/useRoomStateSelector"
-export { default as useRoomInterval } from "./use/useRoomInterval"
 export { default as useRoomTimeout } from "./use/useRoomTimeout"
+export { default as useRoomTimeCounter } from "./use/useRoomTimeCounter"
 
 // types
 export * from "./types"

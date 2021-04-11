@@ -162,10 +162,10 @@
   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.1.tgz#18845205e86ff0038517aab7a18a62a6b9f71275"
   integrity sha512-EaCxbanVeyxDRTQBkdLb3Bvl/HK7PBK6UJjsSixB0iHKoWxE5uu2Q/DgtpOhPIojN0Zl1whvOd7PoHs2P0s5eA==
 
-"@varhub-games/tools@^1.1.13":
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/@varhub-games/tools/-/tools-1.1.13.tgz#73e1041b7470d4ae121eb412673084139883329b"
-  integrity sha512-4sX9DNNV5eMo5kJbD4RPE7q0NufCplpys7ob3Qa4JfDsYtm8DTwlO43eN4pesLXrbYcAw4/yTE0PECUrgK6QWA==
+"@varhub-games/tools@^1.1.14":
+  version "1.1.14"
+  resolved "https://registry.yarnpkg.com/@varhub-games/tools/-/tools-1.1.14.tgz#7afde7c448dc6a928c2976595be1b4f598f2525a"
+  integrity sha512-CteiIur9nV4mUowUZequcaHDrsntsFUedTo8IpWIlnZY/3qNk1nz+fpLe7d/8CFzOI4af4Y7n0ASUVQjEI1apQ==
   dependencies:
     crc-32 "^1.2.0"
     json-stable-stringify "^1.0.1"

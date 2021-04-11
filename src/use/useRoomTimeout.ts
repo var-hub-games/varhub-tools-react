@@ -8,14 +8,13 @@ import {RoomTimeoutCallback} from "../types";
 
 interface RoomTimeoutOptions {
     callOnExpired?: boolean
-}
-const defaultOptions = {
-    callOnExpired: false
+    callOnInit?: boolean
+    step?: number|null
 }
 export default function useRoomTimeout(
-    timeValue: number,
+    timerValue: number|null|undefined,
     callback: RoomTimeoutCallback,
-    options: RoomTimeoutOptions = defaultOptions,
+    options: RoomTimeoutOptions = {},
     room?: Room
 ): void {
     const ctxRoom = useContext(RoomContext);
@@ -23,25 +22,54 @@ export default function useRoomTimeout(
     if (!usedRoom) throw new Error("useRoomTimeout with no <RoomProvider/>");
     const { roomStartDiffMs } = useRoomData(usedRoom);
     const staticCallback = useLatestCallback(callback);
-    const { callOnExpired } = options;
-
+    const { callOnExpired, callOnInit, step } = options;
 
     useEffect(() => {
+        if (timerValue == null) return;
         if (roomStartDiffMs == null) return;
         if (!usedRoom) return;
         const stableRoom = usedRoom;
+        const stableTimeValue = timerValue;
 
-        const timeout = stableRoom.getTimeLeft(timeValue);
-        if (timeout < 0) {
-            if (callOnExpired) staticCallback(0, timeout, true);
+        const fullTimeout = stableRoom.getTimeLeft(timerValue);
+        if (fullTimeout < 0) {
+            staticCallback(0, fullTimeout, true);
             return;
         }
-        const t = setTimeout(() => {
-            const diff = stableRoom.getTimeLeft(timeValue);
-            staticCallback(0, diff, false);
-        }, timeout);
+        const stableStepMs = step ?? 0;
+        let timeout: number;
+        let counter: number;
+        if (stableStepMs > 0) {
+            timeout = fullTimeout % stableStepMs;
+            counter = Math.floor(fullTimeout / stableStepMs);
+        } else {
+            timeout = fullTimeout;
+            counter = 0;
+        }
+
+        // call on init
+        if (callOnInit) {
+            staticCallback(counter+1, fullTimeout, false);
+        }
+
+        // fixing time diff, do not use setInterval here
+        let t = setTimeout(handleTime, timeout);
+        function handleTime(){
+            let diff = stableRoom.getTimeLeft(stableTimeValue);
+            staticCallback(counter--, diff, false);
+            if (counter < 0) return;
+            let timeout = diff - (stableStepMs * counter);
+            while (timeout <= 0) {
+                staticCallback(counter--, diff, false);
+                diff = stableRoom.getTimeLeft(stableTimeValue);
+                timeout = diff - (stableStepMs * counter);
+            }
+            if (counter < 0) return;
+            t = setTimeout(handleTime, timeout);
+        }
+
         return () => clearTimeout(t);
-    }, [timeValue, roomStartDiffMs, callOnExpired, usedRoom]);
+    }, [timerValue, step, roomStartDiffMs, callOnExpired, usedRoom]);
 }
 
 
